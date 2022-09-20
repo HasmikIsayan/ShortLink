@@ -35,8 +35,8 @@ class Link extends Model
     	$link->creator_id = $creator_id;
     	$link->short_url = substr(md5(microtime()), rand(0, 26), 5);
 
-        $qr = \QrCode::size(5)->generate($link->short_url);
-        $link->qr_code = $qr;   	
+        //$qr = \QrCode::size(5)->generate($link->short_url);
+        //$link->qr_code = $qr;   	
 
     	return $link->save();
     }

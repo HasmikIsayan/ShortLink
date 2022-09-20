@@ -25,7 +25,6 @@ class LinkController extends Controller
     public function index()
     {
         $user = User::with('links')->find(Auth::id());
-        var_dump('expression');
         return view('links.index', compact('user'));
     }
 
