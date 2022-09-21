@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
-use User;
+use App\User;
 use Auth;
 //use App\File;
 
@@ -37,8 +37,34 @@ class Link extends Model
 
         //$qr = \QrCode::size(5)->generate($link->short_url);
         //$link->qr_code = $qr;   	
+        if ($link->save()) {
+            return self::createUserReport();
+        }
 
-    	return $link->save();
+
+    }
+
+    public static function createUserReport() {
+        $user = auth()->user();
+
+        $path = storage_path('app/public/docs/user_docs/');
+        $fileName = $user->id .'_reports.csv';
+        $file = fopen($path.$fileName, 'w');
+        $columns = array('Site Url', 'Short Url', 'Created Date');
+
+        fputcsv($file, $columns);
+        foreach ($user->links as $key => $link) {
+            $data = [
+                'Site Url' => $link->site_url,
+                'Short Url' => $link->short_url,
+                'Created Date' => $link->created_at,
+
+            ];
+            fputcsv($file, $data);
+        }
+        fclose($file);
+            
+        return true;
     }
 
 }
