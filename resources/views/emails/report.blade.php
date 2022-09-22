@@ -4,6 +4,6 @@
     <title>Daily links reports!</title>
 </head>
 <body>
-    <p>Happy Birthday, <strong>{{ $details }}</strong>!</p>
+    <p>Dear <strong>{{ $details->name}}</strong>, attach file is your daily report.</p>
 </body>
 </html>

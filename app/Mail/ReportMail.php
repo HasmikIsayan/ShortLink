@@ -30,8 +30,14 @@ class ReportMail extends Mailable
      */
     public function build()
     {
-        //return $this->view('view.name');
+        $path = storage_path('app/public/docs/user_docs/');
+        $fileName = $this->details->id .'_reports.csv';
+
         return $this->subject('Links reports!')
+                    ->attach($path,  [
+                                'as' => $fileName,
+                                'mime' => 'text/csv'
+                            ])
                     ->view('emails.report');
     }
 }
